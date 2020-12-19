@@ -5,7 +5,7 @@ const store = require('../../store');
 // --------------------
 
 const people = new Queue();
-store.people.forEach(person => people.enqueue(person));
+store.people.forEach( person => people.enqueue(person) );
 
 // --------------------
 
@@ -13,18 +13,17 @@ module.exports = {
   get() {
     // Return all people in the queue.
     return people.all();
-
   },
 
   enqueue(person) {
     // Add a person to the queue.
-    people.enqueue(person);
-    return this.get();
+    return people.enqueue(person);
+    //return this.get();
   },
 
   dequeue() {
     // Remove a person from the queue.
-    people.dequeue();
-    return this.get();
+    return people.dequeue();
+    //return this.get();
   }
 };
