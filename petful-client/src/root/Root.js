@@ -9,12 +9,12 @@ class Root extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      people: [],
+      people: ['test'],
       cat: '',
       dog: '',
       currName: ''
     };
-    this.getPeople = this.getPeople.bind(this);
+    //this.getPeople = this.getPeople.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +38,6 @@ class Root extends React.Component {
     for (let i = 0; i < this.state.people.length; i++) {
       list += `${this.state.people[i]}, `;
     }
-
     return list;
   }
 
@@ -49,7 +48,7 @@ class Root extends React.Component {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        name: person,
+        person: person,
       })
     }).then(() => {
       return this.getPeople();
@@ -69,6 +68,7 @@ class Root extends React.Component {
   handleAdds = () => {
     const examplePeople = [ 'David', 'Annelie', 'Evelyn', 'Richard', 'Oroka']
     if (this.state.people[0].includes('you')) {
+      console.log('handleAdds ran')
       for(let i = 0; i < examplePeople.length; i++) {
         setTimeout(() => {
           this.addPerson(examplePeople[i])
@@ -78,19 +78,27 @@ class Root extends React.Component {
   }
 
   handleRemove = () => {
-    if (this.state.people[0].includes('you')) {
+    if (!this.state.people[0].includes('you')) {
+      // let type
+      // if(Math.random() >= 0.5) {
+      //   type = 'cats'
+      // } else {
+      //   type = 'dogs'
+      // }
       this.handleRemovePets();
-      for(let i = 0; i < 5; i++) {
+      for(let i = 0; i < this.state.people.length; i++) {
         setTimeout(() => {
+          console.log('handleRemove')
           this.removePerson();
         },1000 + 3000 * i)
       }
     }
   }
 
-  removePets = (type) => {
-    fetch(`${config.REACT_APP_API_ENDPOINT}/pets/${type}`, {
+  removePets = (type = '') => {
+    fetch(`${config.REACT_APP_API_ENDPOINT}/pets`, {
       method: "DELETE",
+      body: { type: type }
     }).then(res => {
       if(!res.ok) {
         return res.json().then(e => Promise.reject(e))
@@ -102,62 +110,34 @@ class Root extends React.Component {
   }
 
   getPets = () => {
-    Promise.all([
-      fetch(`${config.REACT_APP_API_ENDPOINT}/pets/cats`),
-      fetch(`${config.REACT_APP_API_ENDPOINT}/pets/dogs`)
-    ]).then(([res1,res2]) => {
-      if(!res1.ok) {
-        return res1.json().then(e => Promise.reject(e));
-      }
-      if(!res2.ok) {
-        return res2.json().then(e => Promise.reject(e));
-      }
-    }).then(([cat, dog]) => {
-      this.setState({ cat, dog })
-    }).catch((error => {
-      console.error({ error });
-    }))
+    fetch(`${config.REACT_APP_API_ENDPOINT}/pets`)
+      .then(res => {
+        if(!res.ok) {
+          return res.json().then(e => Promise.reject(e))
+        }
+        return res.json()
+      })
+      .then(resJson => {
+        //this.setState({ cats: resJson.cats, dogs: resJson.dogs })
+        this.setState({
+          cat: resJson.cats[0],
+          dog: resJson.dogs[0]
+        })
+      })
   }
 
   handleRemovePets = () => {
-    if(!this.state.people[0].includes('you')) {
-      setTimeout(() => {
-        let d = Math.random()
-        if(d > 0.5){
-          this.removePets('cat')
-        } else{
-          this.removePets('dog')
-        }
-      }, 2000);
-      setTimeout(() => {
-        let d = Math.random()
-        if(d > 0.5){
-          this.removePets('cat')
-        } else{
-          this.removePets('dog')
-        }
-      }, 4000);
-      setTimeout(() => {
-        let d = Math.random()
-        if(d > 0.5){
-          this.removePets('cat')
-        } else{
-          this.removePets('dog')
-        }
-      }, 6000);
-      setTimeout(() => {
-        let d = Math.random()
-        if(d > 0.5){
-          this.removePets('cat')
-        } else{
-          this.removePets('dog')
-        }
-      }, 8000);
+    if (!this.state.people[0].includes('you')) {
+      if (Math.random() > 0.5) {
+        this.removePets('cats')
+      } else {
+        this.removePets('dogs')
+      }
     }
   }
 
   grabName = (name) => {
-    this.setState({ currName: name })
+    this.setState({ currName: `${name} <- you`})
   }
 
   render() {
