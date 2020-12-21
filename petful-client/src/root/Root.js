@@ -18,7 +18,7 @@ class Root extends React.Component {
   }
 
   componentDidMount() {
-    return this.getPeople();
+    //return this.getPeople();
   }
 
   getPeople = () => {
@@ -145,33 +145,8 @@ class Root extends React.Component {
       <div>
         <h1>Petful</h1>
         <Switch>
-          <Route
-            path={'/'}
-            render={(routerProps) => (
-              <Landing {...routerProps} 
-              addPerson={this.addPerson}
-              handleRemove={this.handleRemove}
-              grabName={this.grabName}
-              currentPerson={this.state.currName}
-              
-              />
-            )}
-            exact={true}
-          />
-          <Route
-            path={'/adopt'}
-            render={(routerProps) => <Adopt
-              {...routerProps} 
-              deletePerson={this.removePerson}
-              getPets={this.getPets}
-              dog={this.state.dog}
-              cat={this.state.cat}
-              currentPeople={this.state.people}
-              removePet={this.removePets}
-              listPeople={this.listPeople}
-              />}
-            exact={true}
-          />
+          <Landing exact path={'/'} />
+          <Adopt path={'/adopt'} />
         </Switch>
       </div>
     )

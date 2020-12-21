@@ -1,27 +1,18 @@
-const express = require('express');
-const json = require('body-parser').json();
+const express = require("express");
+const json = require("body-parser").json();
 
-const People = require('./people.service');
+const People = require("./people.service");
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  // Return all the people currently in the queue.
+router.get("/", (req, res) => {
   res.json(People.get());
-  //res.send(People.get());
 });
 
-router.post('/', json, (req, res) => {
-  // Add a new person to the queue.
+router.post("/", json, (req, res) => {
   const { person } = req.body;
-  const result = People.enqueue(person);
-  res.json(result);
-});
-
-router.delete('/', (req, res) => {
-  const result = People.dequeue();
-
-  res.json(result);
+  People.enqueue(person);
+  res.status(201).json(People.get());
 });
 
 module.exports = router;
