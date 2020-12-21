@@ -20,26 +20,12 @@ module.exports = {
     result.cat = pets.cats.show();
     result.dog = pets.dogs.show();
     if (!result.cat) {
-      result.cat = {
-        age: null,
-        breed: null,
-        description: null,
-        gender: null,
-        imageURL: null,
-        name: 'All cats Adopted',
-        story: 'Great Job!'
-      };
+      store.cats.forEach((cat) => pets.cats.enqueue(cat));
+      result.cat = pets.cats.show();
     }
     if (!result.dog) {
-      result.dog = {
-        age: null,
-        breed: null,
-        description: null,
-        gender: null,
-        imageURL: null,
-        name: 'All dogs Adopted',
-        story: 'Great Job!'
-      };
+      store.dogs.forEach((dog) => pets.dogs.enqueue(dog));
+      result.dog = pets.dogs.show();
     }
     return result;
   },

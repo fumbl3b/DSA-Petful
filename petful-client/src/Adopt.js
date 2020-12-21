@@ -40,7 +40,6 @@ export default class Adopt extends React.Component {
 
   updatePets = () => {
     return petsService.getPets().then(res => {
-      console.log(res);
       this.setState({ dog: res.dog, cat: res.cat });
     });
   }
