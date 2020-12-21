@@ -1,0 +1,21 @@
+.root {
+  background-color: navajowhite;
+}
+
+div {
+  color:olive;
+  background-color: mintcream;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+p {
+  padding: 3px;
+  color:rgb(170, 177, 238)
+}
+
+img {
+  border-radius: 30px;
+  max-width: 50vw;
+}

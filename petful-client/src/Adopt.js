@@ -47,12 +47,14 @@ export default class Adopt extends React.Component {
 
   updatePeople = () => {
     return peopleService.getPeople().then((res) => {
+      let peopleArr;
+      peopleArr = res.filter(person => person !== null);
       if (this.state.name) {
         let me = this.state.name;
-        this.setState({ people: [...res, me] });
+        this.setState({ people: [...peopleArr, me] });
         peopleService.addPerson(me);
       } else {
-        this.setState({ people: [...res] });
+        this.setState({ people: [...peopleArr] });
       }
     });
   }
@@ -63,7 +65,7 @@ export default class Adopt extends React.Component {
         people: prevState.people.slice(1),
       }));
       this.setState({ name: null });
-      this.setState({ adopted: "You have adopted a cat!" });
+      this.setState({ adopted: "Meow! You adopted a cat :)" });
       this.setState({ inLine: false });
     });
   }
@@ -74,7 +76,7 @@ export default class Adopt extends React.Component {
         people: prevState.people.slice(1),
       }));
       this.setState({ name: null });
-      this.setState({ adopted: "You have adopted a dog!" });
+      this.setState({ adopted: "Woof! You adopted a dog :)" });
       this.setState({ inLine: false });
     });
   }
@@ -207,6 +209,8 @@ export default class Adopt extends React.Component {
             adoption are:
           </p>{" "}
           <br />
+          <button onClick={this.adoptCat}>Adopt the cat {this.state.cat.name}!</button>
+          <button onClick={this.adoptDog}>Adopt the dog {this.state.dog.name}!</button>
           <div className="petDisplay">
             <p>
               First we have {this.state.cat.name} a {this.state.cat.age} year
@@ -234,8 +238,7 @@ export default class Adopt extends React.Component {
             />
             <br />
           </div>
-          <button onClick={this.adoptCat}>Adopt the cat!</button>
-          <button onClick={this.adoptDog}>Adopt the dog!</button>
+          
         </section>
       );
     }

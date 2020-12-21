@@ -19,6 +19,28 @@ module.exports = {
     let result = {};
     result.cat = pets.cats.show();
     result.dog = pets.dogs.show();
+    if (!result.cat) {
+      result.cat = {
+        age: null,
+        breed: null,
+        description: null,
+        gender: null,
+        imageURL: null,
+        name: 'All cats Adopted',
+        story: 'Great Job!'
+      };
+    }
+    if (!result.dog) {
+      result.dog = {
+        age: null,
+        breed: null,
+        description: null,
+        gender: null,
+        imageURL: null,
+        name: 'All dogs Adopted',
+        story: 'Great Job!'
+      };
+    }
     return result;
   },
 
