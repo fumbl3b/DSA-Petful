@@ -18,8 +18,7 @@ router.delete("/", json, (req, res) => {
   } catch (e) {
     return res.status(400).json(e.message);
   }
-
-  return res.status(202).end();
+  return res.status(202).send();
 });
 
 module.exports = router;

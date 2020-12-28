@@ -17,8 +17,11 @@ const petsService = {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ type }),
-    }).then((res) => (!res.ok ? (e) => Promise.reject(e) : null));
+      body: JSON.stringify({ type: type }),
+    }).then(res => {
+      console.log(res.ok);
+      return (!res.ok ? (e) => Promise.reject(e) : res.ok)
+    });
   },
 };
 

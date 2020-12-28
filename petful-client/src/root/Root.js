@@ -1,6 +1,7 @@
 import React from 'react'
 import Landing from '../Landing'
 import Adopt from '../Adopt'
+import Adopt2 from '../Adopt2'
 import { Switch } from 'react-router-dom'
 
 
@@ -17,7 +18,7 @@ class Root extends React.Component {
         <h1>Petful</h1>
         <Switch>
           <Landing exact path={'/'} />
-          <Adopt path={'/adopt'} />
+          <Adopt2 path={'/adopt'} />
         </Switch>
       </div>
     )
