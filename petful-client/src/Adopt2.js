@@ -118,15 +118,7 @@ export default class Adopt2 extends React.Component {
             </div>
           </div>
         )}
-
-
-
-
-
       </div>
-
-
-
     )
   }
 }
